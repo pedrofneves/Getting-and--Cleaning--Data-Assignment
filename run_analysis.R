@@ -1,6 +1,6 @@
 
+#Work directory - you need to specify accoding to your local machine/environment
 workDirectory <- "G:\\Cursos\\Coursera - Data Science\\Cleaning Data - Week 4\\assignment\\UCI HAR Dataset"
-
 
 #1. Merges the training and the test sets to create one data set.
 testData <- read.table(file.path(workDirectory,"./test/X_test.txt"),header=FALSE)
@@ -10,9 +10,7 @@ mergedData <- rbind(testData,trainData)
 #2. Extracts only the measurements on the mean and standard deviation for each measurement.
 features <- read.table(file.path(workDirectory,"./features.txt"))
 colnames(mergedData) <- features$V2
-
 selectedDataNames <- features[grepl("-(mean|std)\\(\\)",features$V2),]$V2
-
 selectedData <- mergedData[as.character(selectedDataNames)]
 
 
@@ -40,4 +38,3 @@ library(data.table)
 DT <- data.table(selectedData)
 resultData <- DT[,lapply(.SD,mean), by="activity,subject"]
 write.table(resultData,file="resultData.csv",sep=",",row.names = FALSE)
-
