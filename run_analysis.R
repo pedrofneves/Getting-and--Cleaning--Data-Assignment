@@ -30,6 +30,18 @@ selectedData[,"subject"] <- mergedSubjects
 
 #4. Appropriately labels the data set with descriptive variable names.
 selectedDataNames <- c(as.character(selectedDataNames), "activity", "subject")
+selectedDataNames<-gsub("Acc", "accelerometer", selectedDataNames)
+selectedDataNames<-gsub("Gyro", "Gyroscope", selectedDataNames)
+selectedDataNames<-gsub("BodyBody", "Body", selectedDataNames)
+selectedDataNames<-gsub("Mag", "Magnitude", selectedDataNames)
+selectedDataNames<-gsub("^t", "Time", selectedDataNames)
+selectedDataNames<-gsub("^f", "Frequency", selectedDataNames)
+selectedDataNames<-gsub("tBody", "TimeBody", selectedDataNames)
+selectedDataNames<-gsub("-mean\\(\\)", "Mean", selectedDataNames, ignore.case = TRUE)
+selectedDataNames<-gsub("-std\\(\\)", "Std", selectedDataNames, ignore.case = TRUE)
+selectedDataNames<-gsub("-freq\\(\\)", "Frequency", selectedDataNames, ignore.case = TRUE)
+selectedDataNames<-gsub("angle", "Angle", selectedDataNames)
+selectedDataNames<-gsub("gravity", "Gravity", selectedDataNames)
 names(selectedData) <- selectedDataNames
 
 

@@ -81,13 +81,20 @@ selectedData[,"subject"] <- mergedSubjects
 
 ###4.
 
-The fourth step is to label the data set.
+The fourth step is to label the data set with appropriate names.
 
 We have already loaded all labels in the "selectedDataNames" variable. We need to create a new list with these label adding the activity and subject label.
 
 ```
 selectedDataNames <- c(as.character(selectedDataNames), "activity", "subject")
 names(selectedData) <- selectedDataNames
+```
+
+We need to rename the abbreviation in the column names:
+```
+selectedDataNames<-gsub("Acc", "accelerometer", selectedDataNames)
+selectedDataNames<-gsub("Gyro", "Gyroscope", selectedDataNames)
+...
 ```
 
 ###5.
