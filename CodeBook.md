@@ -62,14 +62,14 @@ Then we can add the activity information to the data set in a new column:
 selectedData[,"activity"] <- mergedActivity
 ```
 
-At last, we have to load the labels of each activity, with its corresponding code, and transform the code into label (character) using factor method:
+At last, we have to load the labels of each activity, with its corresponding code, and transform the code into label (factor) using factor method:
 
 ```
 activityLabels <- read.table(file.path(workDirectory,"./activity_labels.txt"),header=FALSE,colClasses="character")
 selectedData$activity <- factor(selectedData$activity, levels = activityLabels$V1, labels = activityLabels$V2)
 ```
 
-We can do the same for the "subject" information:
+We can do the same for the "subject" information (note that subject has no label, it's just a numeric group):
 
 ```
 testSubjects <- read.table("./test/subject_test.txt",header=FALSE)
@@ -78,7 +78,121 @@ mergedSubjects <- rbind(testSubjects,trainSubjects)
 selectedData[,"subject"] <- mergedSubjects
 ```
 
+###4.
 
- 
- 
+The fourth step is to label the data set.
 
+We have already loaded all labels in the "selectedDataNames" variable. We need to create a new list with these label adding the activity and subject label.
+
+```
+selectedDataNames <- c(as.character(selectedDataNames), "activity", "subject")
+names(selectedData) <- selectedDataNames
+```
+
+###5.
+
+The fifth step required create a new data frame containing the average of each variable grouped by activity and subject.
+
+To do that we need to load the library "data.table" that contains facilities to summarize information. 
+
+```
+library(data.table)
+```
+
+So we create a new variable "DT" that wraps the data frame information:
+```
+DT <- data.table(selectedData)
+```
+
+Using the data.table we can execute lapply function for each subset of the date frame. 
+The data is divided in groups by activity, subject and column (variable).
+The mean funcion is applied for each each group.
+```
+resultData <- DT[,lapply(.SD,mean), by="activity,subject"]
+```
+
+At last, we write the result data into a file:
+```
+write.table(resultData,file="resultData.csv",sep=",",row.names = FALSE)
+```	
+
+
+
+##Variables
+
+The resultData contains the average of each variable listed below grouped by "activity" and "subject".
+
+The "activity" is a factor containing the values as defined in "activity_labels.txt" file.
+
+The "subject" is a numeric integer representing the groups.
+
+
+* tBodyAcc-mean()-X               
+* tBodyAcc-std()-X           
+* tGravityAcc-mean()-X       
+* tGravityAcc-std()-X        
+* tBodyAccJerk-mean()-X      
+* tBodyAccJerk-std()-X       
+* tBodyGyro-mean()-X         
+* tBodyGyro-std()-X          
+* tBodyGyroJerk-mean()-X     
+* tBodyGyroJerk-std()-X      
+* tBodyAccMag-mean()         
+* tGravityAccMag-std()       
+* tBodyGyroMag-mean()        
+* tBodyGyroJerkMag-std()     
+* fBodyAcc-mean()-Z          
+* fBodyAcc-std()-Z           
+* fBodyAccJerk-mean()-Z      
+* fBodyAccJerk-std()-Z       
+* fBodyGyro-mean()-Z         
+* fBodyGyro-std()-Z          
+* fBodyBodyAccJerkMag-mean() 
+* fBodyBodyGyroMag-std()     
+* tBodyAcc-mean()-Y                      
+* tBodyAcc-std()-Y           
+* tGravityAcc-mean()-Y       
+* tGravityAcc-std()-Y        
+* tBodyAccJerk-mean()-Y      
+* tBodyAccJerk-std()-Y       
+* tBodyGyro-mean()-Y         
+* tBodyGyro-std()-Y          
+* tBodyGyroJerk-mean()-Y     
+* tBodyGyroJerk-std()-Y      
+* tBodyAccMag-std()          
+* tBodyAccJerkMag-mean()     
+* tBodyGyroMag-std()         
+* fBodyAcc-mean()-X          
+* fBodyAcc-std()-X           
+* fBodyAccJerk-mean()-X      
+* fBodyAccJerk-std()-X       
+* fBodyGyro-mean()-X         
+* fBodyGyro-std()-X          
+* fBodyAccMag-mean()         
+* fBodyBodyAccJerkMag-std()  
+* fBodyBodyGyroJerkMag-mean()
+* tBodyAcc-mean()-Z              
+* tBodyAcc-std()-Z           
+* tGravityAcc-mean()-Z       
+* tGravityAcc-std()-Z        
+* tBodyAccJerk-mean()-Z      
+* tBodyAccJerk-std()-Z       
+* tBodyGyro-mean()-Z         
+* tBodyGyro-std()-Z          
+* tBodyGyroJerk-mean()-Z     
+* tBodyGyroJerk-std()-Z      
+* tGravityAccMag-mean()      
+* tBodyAccJerkMag-std()      
+* tBodyGyroJerkMag-mean()    
+* fBodyAcc-mean()-Y          
+* fBodyAcc-std()-Y           
+* fBodyAccJerk-mean()-Y      
+* fBodyAccJerk-std()-Y       
+* fBodyGyro-mean()-Y         
+* fBodyGyro-std()-Y          
+* fBodyAccMag-std()          
+* fBodyBodyGyroMag-mean()    
+* fBodyBodyGyroJerkMag-std() 
+* activity    
+* subject
+ 
