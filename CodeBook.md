@@ -20,6 +20,7 @@ trainData <- read.table(file.path(workDirectory,"./train/X_train.txt"),header=FA
 ```
 
 These data has numeric value (measurements) normalized between [-1,1] for 261 types of measurements.
+For more information about the measurement, see "README.txt" and "feature_info.txt" of the UCI zip.
 
 PS: you have to define the "workDirectory" variable before.
 
@@ -120,12 +121,13 @@ write.table(resultData,file="resultData.csv",sep=",",row.names = FALSE)
 
 ##Variables
 
-The resultData contains the average of each variable listed below grouped by "activity" and "subject".
+The "workDirectory" is a variable that should be defined before running the script.
+
+The "resultData" contains the average of each variable listed below grouped by "activity" and "subject".
 
 The "activity" is a factor containing the values as defined in "activity_labels.txt" file.
 
 The "subject" is a numeric integer representing the groups.
-
 
 * tBodyAcc-mean()-X               
 * tBodyAcc-std()-X           
