@@ -8,17 +8,22 @@ You can find the code in "run_analysis.R" file.
 
 ##Steps
 
-The first step required is read the feature files for test and train:
+###1
+The first step required is load the feature files of test and train:
 
 ```
 testData <- read.table(file.path(workDirectory,"./test/X_test.txt"),header=FALSE)
 trainData <- read.table(file.path(workDirectory,"./train/X_train.txt"),header=FALSE)
 ```
 
-PS: you have to define the "workDirectory" variable.
+PS: you have to define the "workDirectory" variable before.
 
-Then we need to merge the two data frames:
+Then we need to join the two data frames:
 
 ```
 mergedData <- rbind(testData,trainData)
 ```
+
+
+
+
