@@ -22,14 +22,14 @@ selectedData[,"activity"] <- mergedActivity
 activityLabels <- read.table(file.path(workDirectory,"./activity_labels.txt"),header=FALSE,colClasses="character")
 selectedData$activity <- factor(selectedData$activity, levels = activityLabels$V1, labels = activityLabels$V2)
 
-testSubjects <- read.table("./test/subject_test.txt",header=FALSE)
-trainSubjects<- read.table("./train/subject_train.txt",header=FALSE)
+testSubjects <- read.table(file.path(workDirectory,"./test/subject_test.txt"),header=FALSE)
+trainSubjects<- read.table(file.path(workDirectory,"./train/subject_train.txt"),header=FALSE)
 mergedSubjects <- rbind(testSubjects,trainSubjects)
 selectedData[,"subject"] <- mergedSubjects
 
 
 #4. Appropriately labels the data set with descriptive variable names.
-selectedDataNames <- c(as.character(selectedDataNames), "activity", "subject")
+selectedDataNames <- as.character(selectedDataNames)
 selectedDataNames<-gsub("Acc", "accelerometer", selectedDataNames)
 selectedDataNames<-gsub("Gyro", "Gyroscope", selectedDataNames)
 selectedDataNames<-gsub("BodyBody", "Body", selectedDataNames)
@@ -42,6 +42,7 @@ selectedDataNames<-gsub("-std\\(\\)", "Std", selectedDataNames, ignore.case = TR
 selectedDataNames<-gsub("-freq\\(\\)", "Frequency", selectedDataNames, ignore.case = TRUE)
 selectedDataNames<-gsub("angle", "Angle", selectedDataNames)
 selectedDataNames<-gsub("gravity", "Gravity", selectedDataNames)
+selectedDataNames<-c(selectedDataNames, "activity", "subject")
 names(selectedData) <- selectedDataNames
 
 
