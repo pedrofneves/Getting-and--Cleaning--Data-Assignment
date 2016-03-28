@@ -50,4 +50,4 @@ names(selectedData) <- selectedDataNames
 library(data.table)
 DT <- data.table(selectedData)
 resultData <- DT[,lapply(.SD,mean), by="activity,subject"]
-write.table(resultData,file="resultData.csv",sep=",",row.names = FALSE)
+write.table(resultData,file=file.path(workDirectory,"resultData.csv"),sep=",",row.names = FALSE)
